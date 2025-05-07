@@ -1,5 +1,5 @@
-<?php 
-   include_once('views/main/navbar.php');
+<?php
+include_once('views/main/navbar.php');
 ?>
 <main>
     <style>
@@ -32,14 +32,58 @@
         /* Ensures the box takes the full height of the parent container */
         box-shadow: 0 15px 15px rgba(0, 0, 0, 0.1);
     }
+
+    /* wrap the entire breadcrumb bar */
+    .breadcrumb-nav {
+        margin-top: 100px;
+        background-color: #f6f6f6;
+        padding: 0.5rem 0;
+        /* vertical breathing room */
+    }
+
+    /* remove default bg and padding on the <ol> */
+    .breadcrumb {
+        background: transparent;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    /* custom separator (you can swap ➔ for /, » or a SVG icon) */
+    .breadcrumb-item+.breadcrumb-item::before {
+        content: "➔";
+        color: #6c757d;
+        padding: 0 0.5rem;
+    }
+
+    /* link styles */
+    .breadcrumb-item a {
+        color: #0d6efd;
+        text-decoration: none;
+    }
+
+    .breadcrumb-item a:hover {
+        text-decoration: underline;
+    }
+
+    /* active (current) crumb */
+    .breadcrumb-item.active {
+        color: #495057;
+        font-weight: 600;
+    }
     </style>
-    <div class="container-fluid py-2" style="margin-top: 100px; background-color: #f6f6f6">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
         <div class="container">
-            <a href="index.php?page=main&controller=layouts&action=index" class="fw-bold me-2">Home</a>&nbsp;>
-            <a href="index.php?page=main&controller=womenproducts&action=index"
-                class=" fw-bold me-2">&nbsp;&nbsp;Women</a>
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a href="index.php?page=main&controller=layouts&action=index">Home</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Women
+                </li>
+            </ol>
         </div>
-    </div>
+    </nav>
+
     <div class="container" style="margin-top: 10px">
         <div class="row">
             <!-- Item 1 -->
@@ -103,41 +147,41 @@
             <div class="row" style="margin-top: 30px; padding-left: 60px">
                 <div id="card-content"
                     class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-4 justify-content-center">
-                    <?php 
-            // Lặp qua danh sách sản phẩm và hiển thị card
-            foreach ($womenproducts as $womenproduct) {
-                echo '<div id="card" class="col mb-3">
+                    <?php
+                    // Lặp qua danh sách sản phẩm và hiển thị card
+                    foreach ($womenproducts as $womenproduct) {
+                        echo '<div id="card" class="col mb-3">
                         <a href="index.php?page=main&controller=detail&id=' . $womenproduct->id . '&action=index"
                             class="card h-100 text-decoration-none">';
 
-                            if ($womenproduct->sale) {
+                        if ($womenproduct->sale) {
                             echo '<div class="badge bg-dark text-light position-absolute"
                                 style="top: 0.5rem; right: 0.5rem"> - ' . $womenproduct->sale . '%</div>';
-                            }
+                        }
 
-                            echo '<img class="card-img-top" src="' . $womenproduct->img . '" alt="..."
+                        echo '<img class="card-img-top" src="' . $womenproduct->img . '" alt="..."
                                 style="height: 80%; width: auto;">
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <p class="product-name text-muted" style="font-size: 1em">' . $womenproduct->name .
-                                        '</p>
+                            '</p>
                                     <span class="fw-bold">' . number_format($womenproduct->price * (100 -
-                                        $womenproduct->sale) / 100, 0, ',', '.') . ' đ</span>
+                                $womenproduct->sale) / 100, 0, ',', '.') . ' đ</span>
                                     <span class="text-muted text-decoration-line-through">' .
-                                        number_format($womenproduct->price, 0, ',', '.') . ' đ</span>';
+                            number_format($womenproduct->price, 0, ',', '.') . ' đ</span>';
 
-                                    if ($womenproduct->vote_number == 0) {
-                                    echo '<p class="product-name text-muted" style="font-size: 1em">' .
-                                        $womenproduct->vote_number . ' lượt đánh giá</p>';
-                                    } else {
-                                    echo '<p class="product-name text-muted" style="font-size: 1em">' .
-                                        $womenproduct->vote_number . ' lượt đánh giá</p>
+                        if ($womenproduct->vote_number == 0) {
+                            echo '<p class="product-name text-muted" style="font-size: 1em">' .
+                                $womenproduct->vote_number . ' lượt đánh giá</p>';
+                        } else {
+                            echo '<p class="product-name text-muted" style="font-size: 1em">' .
+                                $womenproduct->vote_number . ' lượt đánh giá</p>
                                     <p class="product-name text-muted" style="font-size: 1em">' .
-                                        $womenproduct->total_stars / $womenproduct->vote_number . ' đánh giá trung bình
+                                $womenproduct->total_stars / $womenproduct->vote_number . ' đánh giá trung bình
                                     </p>';
-                                    }
+                        }
 
-                                    echo '
+                        echo '
                                 </div>
                             </div>
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
@@ -282,5 +326,5 @@
 </main>
 
 <?php
-   include_once('views/main/footer.php');
+include_once('views/main/footer.php');
 ?>

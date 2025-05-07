@@ -1,80 +1,39 @@
 <?php
-  include_once('views/main/navbar.php');
+include_once('views/main/navbar.php');
 ?>
-<!-- <style>
-		.carousel-item img {
-			width: 100%;
-			height: 485px;
-			object-fit: contain;
-		}
 
-    @media (min-width: 576px) {
-			.carousel-item img {
-				height: 400px;
-			}
-		}
+<?php
+$carouselImages = [
+    ["src" => "https://media.routine.vn/1920x0/prod/media/f-website-lp-coffee-lovers-png-ex97.webp", "alt" => "Slide 1 description"],
+    ["src" => "https://media.routine.vn/1920x0/prod/media/banner-web-pc-png-vtcs.webp", "alt" => "Slide 2 description"],
+    ["src" => "https://media.routine.vn/1920x0/prod/media/cfl-nu-pc-png-2prq.webp", "alt" => "Slide 3 description"],
+];
+?>
 
-		@media (min-width: 768px) {
-			.carousel-item img {
-				height: 500px;
-			}
-		}
-
-		@media (min-width: 992px) {
-			.carousel-item img {
-				height: 600px;
-			}
-		}
-	</style>
-  <div class="container mt-5">
-		<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-			<div class="carousel-inner">
-				<div class="carousel-item active">
-					<img src="https://bizweb.dktcdn.net/100/442/302/themes/842651/assets/slider_3.jpg?1668074220953" alt="Slide 1">
-				</div>
-				<div class="carousel-item">
-					<img src="https://bizweb.dktcdn.net/100/442/302/themes/842651/assets/slider_2.jpg?1668074220953" alt="Slide 2">
-				</div>
-				<div class="carousel-item">
-					<img src="https://bizweb.dktcdn.net/100/442/302/themes/842651/assets/slider_1.jpg?1668074220953" alt="Slide 3">
-				</div>
-			</div>
-
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>  
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-		</div>
-	</div> -->
-
-<div id="advertisement-product" class="container-fluid d-block" style="margin-top: 80px;">
+<!-- <div id="advertisement-product" class="container-fluid d-block" style="margin-top: 80px;">
     <div class="row banner">
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="0" class="active"
                     aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="1"
                     aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="2"
                     aria-label="Slide 3"></button>
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="https://routine.vn/media/amasty/webp/banner/tmp/images/Coffee-Lovers-Collection-Series-2_2_jpg.webp"
+                    <img src="https://media.routine.vn/1920x0/prod/media/f-website-lp-coffee-lovers-png-ex97.webp"
                         class="d-block w-100" alt="..."
                         style="width: 100%; object-fit: cover; object-position: center;">
                 </div>
                 <div class="carousel-item">
-                    <img src="https://routine.vn/media/amasty/webp/wysiwyg/Emagazine-desktop_jpg.webp"
+                    <img src="https://media.routine.vn/1920x0/prod/media/banner-web-pc-png-vtcs.webp"
                         class="d-block w-100" alt="..." style="width: 100%; height: 100%; object-position: center;">
                 </div>
                 <div class="carousel-item">
-                    <img src="https://routine.vn/media/amasty/webp/banner/tmp/images/Couple_Collection_Desktop_jpg.webp"
-                        class="d-block w-100" alt="..." style="width: 100%; height: 100%; object-position: center;">
+                    <img src="https://media.routine.vn/1920x0/prod/media/cfl-nu-pc-png-2prq.webp" class="d-block w-100"
+                        alt="..." style="width: 100%; height: 100%; object-position: center;">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
@@ -89,6 +48,12 @@
             </button>
         </div>
     </div>
+</div> -->
+<div id="myCarousel">
+    <img id="carouselImage" src="" alt="">
+    <button id="prevBtn" class="carousel-btn" aria-label="Previous slide">&#10094;</button>
+    <button id="nextBtn" class="carousel-btn" aria-label="Next slide">&#10095;</button>
+    <div id="carouselIndicators"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
@@ -110,10 +75,12 @@
 
                         <p class="text-center">
                             <span class="fw-bold">Tạo dựng phong cách bằng những tuyên ngôn thời trang</span>
+
                         <p class="justify-content">
                             <span style="display: flex; justify-content: center; align-items: center;">
-                                <img src="assets/images/team_logo.png" alt=""
-                                    style="width: 15%; height: auto; object-position: center;">
+                                <img style="width: 40px; height: 40px;"
+                                    src="https://media.routine.vn/100x0/prod/media/a31071fa-22a1-440b-a6d2-776d07fe0419.webp"
+                                    alt="">
                             </span>
                             <br>
                             Như ý nghĩa của tên gọi, trang phục của Routine hướng đến việc trở thành thói quen, lựa chọn
@@ -144,24 +111,6 @@
             </div>
         </div>
     </section><!-- End About Us Section -->
-    <div class="about--service mt-5">
-        <div class="text--italic">What we do</div>
-        <div class="text--bold">OUR SERVICE</div>
-        <div class="para--short">“Routine đang tạo ra những bộ trang phục sản xuất trong nước hoàn toàn có thể sánh
-            ngang với các thương hiệu thời trang nam đến từ nước ngoài về kiểu dáng, chất lượng lẫn phong cách thời
-            trang.” - CEO Routine.
-        </div>
-
-        <div class="about-container">
-            <div class="service--item first-item">TƯ VẤN</div>
-            <div class="service--item second-item">THIẾT KẾ</div>
-            <div class="service--item third-item">BÁN LẺ</div>
-            <div class="service--item fourth-item">HOÁ TRANG</div>
-        </div>
-    </div>
-    <div class="mt-5">
-        <div class="text--bold">CHÀO THÁNG 12 | SALE ĐẬM SÂU | CHỈ CÓ TẠI ONLINE</div>
-    </div>
 
 
     <div id=" news" onclick="window.location.href='/BigFarm/index.php?page=main&controller=blog&action=index'">
@@ -171,21 +120,85 @@
 
     </div>
     <script>
-    $(function() {
-        $("#about").load(
-            "http://localhost/BigFarm/index.php?page=main&controller=about&action=index #about-page");
-    });
-    $(function() {
-        $("#news").load("http://localhost/BigFarm/index.php?page=main&controller=blog&action=index #blog");
-    });
-    $(function() {
-        $("#contact").load(
-            "http://localhost/BigFarm/index.php?page=main&controller=contact&action=index #contact");
-    });
+        $(function() {
+            $("#about").load(
+                "http://localhost/BigFarm/index.php?page=main&controller=about&action=index #about-page");
+        });
+        $(function() {
+            $("#news").load("http://localhost/BigFarm/index.php?page=main&controller=blog&action=index #blog");
+        });
+        $(function() {
+            $("#contact").load(
+                "http://localhost/BigFarm/index.php?page=main&controller=contact&action=index #contact");
+        });
     </script>
 
 
 </main><!-- End #main -->
+
+<script>
+    // a) Pull in PHP array
+    const images = <?php echo json_encode($carouselImages, JSON_HEX_TAG); ?>;
+    let currentIndex = 0;
+    const autoSlideMs = 5000;
+
+    // b) DOM refs
+    const imgEl = document.getElementById('carouselImage');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const indicatorsContainer = document.getElementById('carouselIndicators');
+
+    // c) Build indicators
+    images.forEach((_, idx) => {
+        const dot = document.createElement('div');
+        dot.className = 'indicator';
+        dot.addEventListener('click', () => goToSlide(idx));
+        indicatorsContainer.appendChild(dot);
+    });
+    const indicators = Array.from(document.querySelectorAll('.indicator'));
+
+    // d) Render a slide
+    function updateSlide() {
+        const {
+            src,
+            alt
+        } = images[currentIndex];
+        imgEl.style.opacity = 0;
+        setTimeout(() => {
+            imgEl.src = src;
+            imgEl.alt = alt;
+            imgEl.style.opacity = 1;
+        }, 200);
+        indicators.forEach((dot, i) => dot.classList.toggle('active', i === currentIndex));
+    }
+
+    // e) Navigation
+    function goToPrevious() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateSlide();
+    }
+
+    function goToNext() {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateSlide();
+    }
+
+    function goToSlide(idx) {
+        currentIndex = idx;
+        updateSlide();
+    }
+
+    // f) Event listeners
+    prevBtn.addEventListener('click', goToPrevious);
+    nextBtn.addEventListener('click', goToNext);
+
+    // g) Auto-slide
+    setInterval(goToNext, autoSlideMs);
+
+    // h) Start
+    updateSlide();
+</script>
+
 
 <?php
 include_once('views/main/footer.php');
