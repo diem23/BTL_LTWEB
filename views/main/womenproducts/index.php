@@ -1,6 +1,36 @@
 <?php
 include_once('views/main/navbar.php');
 ?>
+
+<?php
+// 1) Define your features
+$features = [
+    [
+        'icon' => '<i class="fas fa-shopping-bag fa-2x text-dark"></i>',
+        'description' => 'Sản phẩm của Routine đảm bảo chất lượng tốt nhất, với sự chọn lọc cẩn thận về chất liệu để mang đến trải nghiệm thoải mái và lâu dài.',
+    ],
+    [
+        'icon' => '<i class="fas fa-award fa-2x text-dark"></i>',
+        'description' => 'Routine tự hào về sự bền bỉ của sản phẩm, từ quy trình sản xuất đến chất liệu chọn lọc, để đảm bảo bạn luôn có quần áo đáng tin cậy.',
+    ],
+    [
+        'icon' => '<i class="fas fa-shield-alt fa-2x text-dark"></i>',
+        'description' => 'Với quy trình kiểm soát chất lượng nghiêm ngặt, mỗi sản phẩm đều được đảm bảo vượt qua các tiêu chuẩn cao nhất, mang đến sự hài lòng cho khách hàng.',
+    ],
+];
+?>
+<?php
+// 1) Grab the current action from the query string
+//    Default to 'index' if no sort action is present
+$currentAction = $_GET['action'] ?? 'index';
+
+// 2) Map your <option> values to those action names
+$sortOptions = [
+    'default'      => ['label' => 'Sắp xếp theo',               'action' => 'index'],
+    'highToLow'    => ['label' => 'Giá cao đến thấp',            'action' => 'sortByPriceHighToLow'],
+    'lowToHigh'    => ['label' => 'Giá thấp đến cao',            'action' => 'sortByPriceLowToHigh'],
+];
+?>
 <main>
     <style>
     .card-img-top:hover {
@@ -35,8 +65,8 @@ include_once('views/main/navbar.php');
 
     /* wrap the entire breadcrumb bar */
     .breadcrumb-nav {
-        margin-top: 100px;
-        background-color: #f6f6f6;
+        margin-top: 76px;
+        /* background-color: #f6f6f6; */
         padding: 0.5rem 0;
         /* vertical breathing room */
     }
@@ -50,9 +80,8 @@ include_once('views/main/navbar.php');
 
     /* custom separator (you can swap ➔ for /, » or a SVG icon) */
     .breadcrumb-item+.breadcrumb-item::before {
-        content: "➔";
+        content: ">";
         color: #6c757d;
-        padding: 0 0.5rem;
     }
 
     /* link styles */
@@ -70,6 +99,116 @@ include_once('views/main/navbar.php');
         color: #495057;
         font-weight: 600;
     }
+
+    .feature-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    .product-card {
+        background: #fff;
+        border-radius: .75rem;
+        overflow: hidden;
+        box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+        transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    .product-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+    }
+
+    /* 3:4 aspect ratio wrapper */
+    .product-image-wrapper {
+        position: relative;
+        width: 100%;
+        padding-top: 133.3333%;
+        /* 4/3 = 133.33% */
+        background: #f8f9fa;
+        overflow: hidden;
+    }
+
+    .product-image-wrapper img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform .5s ease;
+    }
+
+    .product-card:hover .product-image-wrapper img {
+        transform: scale(1.05);
+    }
+
+    /* Truncate name to two lines */
+    .product-name {
+        font-size: .875rem;
+        color: #6b7280;
+        margin-bottom: .5rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Prices */
+    .product-price {
+        font-weight: 600;
+        color: #111827;
+        font-size: 1rem;
+    }
+
+    .product-price-original {
+        margin-left: .5rem;
+        font-size: .875rem;
+        color: #6b7280;
+        text-decoration: line-through;
+    }
+
+    /* Ratings */
+    .rating {
+        margin-top: .5rem;
+        display: flex;
+        align-items: center;
+        font-size: .875rem;
+        color: #6b7280;
+    }
+
+    .star {
+        width: 14px;
+        height: 14px;
+        margin-right: 2px;
+    }
+
+    .star.filled {
+        color: #f59e0b;
+        /* yellow-400 */
+    }
+
+    .star.empty {
+        color: #d1d5db;
+        /* gray-300 */
+    }
+
+    /* Pagination: set the active page’s background to #f6f6f6 */
+    .pagination .page-item.active .page-link {
+        background-color: #f6f6f6;
+        border-color: rgb(166, 159, 159);
+        color: #000;
+        /* adjust text color if you need more contrast */
+    }
+
+    /* Optional: keep the hover state consistent */
+    .pagination .page-item.active .page-link:hover {
+        background-color: #e5e5e5;
+        border-color: #e5e5e5;
+    }
     </style>
     <nav aria-label="breadcrumb" class="breadcrumb-nav">
         <div class="container">
@@ -84,243 +223,239 @@ include_once('views/main/navbar.php');
         </div>
     </nav>
 
-    <div class="container" style="margin-top: 10px">
-        <div class="row">
-            <!-- Item 1 -->
-            <div class="col-md-4">
-                <div class="square-box">
-                    <div class="d-flex flex-column align-items-center justify-content-center">
-                        <!-- Icon 1 -->
-                        <i class="bi bi-person" style="font-size: 3rem; color: #001f3f;"></i>
-                        <!-- Description 1 -->
-                        <p class="text-center">Sản phẩm của Routine đảm bảo chất lượng tốt nhất, với sự chọn lọc cẩn
-                            thận về
-                            chất liệu để mang đến trải nghiệm thoải mái và lâu dài.</p>
+    <div class="container pt-4">
+        <div class="row g-4">
+            <?php foreach ($features as $feature): ?>
+            <div class="col-12 col-md-4">
+                <div class="card  feature-card border-0 shadow ">
+                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                        <div class="mb-3">
+                            <div
+                                class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center p-3">
+                                <?= $feature['icon']; ?>
+                            </div>
+                        </div>
+                        <p class="card-text text-secondary">
+                            <?= $feature['description']; ?>
+                        </p>
                     </div>
                 </div>
             </div>
-
-            <!-- Item 2 -->
-            <div class="col-md-4">
-                <div class="square-box">
-                    <div class="d-flex flex-column align-items-center justify-content-center">
-                        <!-- Icon 2 -->
-                        <i class="bi bi-person" style="font-size: 3rem; color: #001f3f;"></i>
-                        <!-- Description 2 -->
-                        <p class="text-center">Routine tự hào về sự bền bỉ của sản phẩm, từ quy trình sản xuất đến
-                            chất liệu chọn lọc, để đảm bảo bạn luôn có quần áo đáng tin cậy.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Item 3 -->
-            <div class="col-md-4">
-                <div class="square-box">
-                    <div class="d-flex flex-column align-items-center justify-content-center">
-                        <!-- Icon 3 -->
-                        <i class="bi bi-person" style="font-size: 3rem; color: #001f3f;"></i>
-                        <!-- Description 3 -->
-                        <p class="text-center">Với quy trình kiểm soát chất lượng nghiêm ngặt, mỗi sản phẩm đều được
-                            đảm
-                            bảo vượt qua các tiêu chuẩn cao nhất, mang đến sự hài lòng cho khách hàng.</p>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 
 
+    <!-- Items Section -->
+    <div class="container-fluid py-2">
+        <div class="container px-4 px-lg-6 mt-4">
 
-    <!-- Items -->
-    <div class="container-fluid py-2" style="margin-top: 10px">
-        <div class="container-fluid px-4 px-lg-6 mt-4">
-            <div style="display: flex; justify-content: flex-end; margin-top: 10px">
-                <select id="sortOption" name=""
-                    style="margin-left: auto; border-radius: 10px; height: 30px; width: 300px; border-color: #ccc;"
-                    onchange="sortProducts()">
-                    <option value="default">Sắp xếp theo</option>
-                    <option value="highToLow">Giá cao đến thấp</option>
-                    <option value="lowToHigh">Giá thấp đến cao</option>
+            <!-- Sort Dropdown -->
+            <div class="d-flex justify-content-end mb-3">
+                <select id="sortOption" class="form-select w-auto" onchange="sortProducts()">
+                    <option value="default"
+                        <?= ($_GET['action'] ?? 'index') === 'index'                     ? 'selected' : '' ?>>
+                        Sắp xếp theo
+                    </option>
+                    <option value="highToLow"
+                        <?= ($_GET['action'] ?? '') === 'sortByPriceHighToLow'      ? 'selected' : '' ?>>
+                        Giá cao đến thấp
+                    </option>
+                    <option value="lowToHigh"
+                        <?= ($_GET['action'] ?? '') === 'sortByPriceLowToHigh'      ? 'selected' : '' ?>>
+                        Giá thấp đến cao
+                    </option>
                 </select>
-
             </div>
-            <div class="row" style="margin-top: 30px; padding-left: 60px">
-                <div id="card-content"
-                    class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-4 justify-content-center">
-                    <?php
-                    // Lặp qua danh sách sản phẩm và hiển thị card
-                    foreach ($womenproducts as $womenproduct) {
-                        echo '<div id="card" class="col mb-3">
-                        <a href="index.php?page=main&controller=detail&id=' . $womenproduct->id . '&action=index"
-                            class="card h-100 text-decoration-none">';
 
-                        if ($womenproduct->sale) {
-                            echo '<div class="badge bg-dark text-light position-absolute"
-                                style="top: 0.5rem; right: 0.5rem"> - ' . $womenproduct->sale . '%</div>';
-                        }
+            <!-- Product Grid -->
+            <div id="card-content" class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4">
+                <?php foreach ($womenproducts as $product): ?>
+                <div id="card" class="col">
+                    <a href="index.php?page=main&controller=detail&id=<?= $product->id ?>&action=index"
+                        class="text-decoration-none text-reset">
 
-                        echo '<img class="card-img-top" src="' . $womenproduct->img . '" alt="..."
-                                style="height: 80%; width: auto;">
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <p class="product-name text-muted" style="font-size: 1em">' . $womenproduct->name .
-                            '</p>
-                                    <span class="fw-bold">' . number_format($womenproduct->price * (100 -
-                                $womenproduct->sale) / 100, 0, ',', '.') . ' đ</span>
-                                    <span class="text-muted text-decoration-line-through">' .
-                            number_format($womenproduct->price, 0, ',', '.') . ' đ</span>';
+                        <div class="product-card position-relative h-100">
 
-                        if ($womenproduct->vote_number == 0) {
-                            echo '<p class="product-name text-muted" style="font-size: 1em">' .
-                                $womenproduct->vote_number . ' lượt đánh giá</p>';
-                        } else {
-                            echo '<p class="product-name text-muted" style="font-size: 1em">' .
-                                $womenproduct->vote_number . ' lượt đánh giá</p>
-                                    <p class="product-name text-muted" style="font-size: 1em">' .
-                                $womenproduct->total_stars / $womenproduct->vote_number . ' đánh giá trung bình
-                                    </p>';
-                        }
+                            <!-- Sale Badge -->
+                            <?php if (!empty($product->sale)): ?>
+                            <div class="badge bg-black text-white position-absolute"
+                                style="top: .5rem; right: .5rem; z-index:10;">
+                                -<?= $product->sale ?>%
+                            </div>
+                            <?php endif; ?>
 
-                        echo '
+                            <!-- Image -->
+                            <div class="product-image-wrapper">
+                                <img src="<?= htmlspecialchars($product->img, ENT_QUOTES); ?>"
+                                    alt="<?= htmlspecialchars($product->name, ENT_QUOTES); ?>">
+                            </div>
+
+                            <!-- Info -->
+                            <div class="p-3">
+                                <h3 class="product-name">
+                                    <?= htmlspecialchars($product->name, ENT_QUOTES); ?>
+                                </h3>
+
+                                <div class="d-flex align-items-baseline">
+                                    <span class="product-price">
+                                        <?= number_format($product->price * (100 - $product->sale) / 100, 0, ',', '.'); ?>
+                                        đ
+                                    </span>
+                                    <?php if ($product->sale > 0): ?>
+                                    <span class="product-price-original">
+                                        <?= number_format($product->price, 0, ',', '.'); ?> đ
+                                    </span>
+                                    <?php endif; ?>
+                                </div>
+
+                                <!-- Ratings -->
+                                <div class="rating">
+                                    <?php if ($product->vote_number > 0):
+                                            $avg = round($product->total_stars / $product->vote_number); ?>
+                                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <svg class="star <?= $i <= $avg ? 'filled' : 'empty'; ?>"
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 .587l3.668 7.431L23.4 9.6l-5.5 5.356L18.751 23 
+                                   12 19.771 5.249 23l.85-7.045L.6 9.6l7.732-1.582z" />
+                                    </svg>
+                                    <?php endfor; ?>
+                                    <span class="ms-1">(<?= $product->vote_number; ?>)</span>
+                                    <?php else: ?>
+                                    <span>Chưa có đánh giá</span>
+                                    <?php endif; ?>
                                 </div>
                             </div>
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center">
-                                    <!-- Optional: Keep this div if you want to maintain the same structure -->
-                                </div>
-                            </div>
-                        </a>
-                    </div>';
-                    }
+                        </div>
 
-                    ?>
+                    </a>
                 </div>
+                <?php endforeach; ?>
+            </div>
 
-
-
+            <!-- Pagination Controls -->
+            <div class="d-flex justify-content-center mt-4">
+                <ul class="pagination"></ul>
             </div>
 
         </div>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-end">
-
-                <li class="page-item">
-                    <a class="page-link previous-page" href="#" tabindex="-1">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link .next-page" href="#">Next</a>
-                </li>
-            </ul>
-        </nav>
     </div>
 
+    <!-- jQuery (for pagination script) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-
-    <script type="text/javascript">
-    function getPageList(totalPages, page, maxLength) {
-        function range(start, end) {
-            return Array.from(Array(end - start + 1), (_, i) => i + start);
-        }
-
-        var sideWidth = maxLength < 9 ? 1 : 2;
-        var leftWidth = (maxLength - sideWidth * 2 - 3) >> 1;
-        var rightWidth = (maxLength - sideWidth * 2 - 3) >> 1;
-
-        if (totalPages <= maxLength) {
-            return range(1, totalPages);
-        }
-
-        if (page <= maxLength - sideWidth - 1 - rightWidth) {
-            return range(1, maxLength - sideWidth - 1).concat(0, range(totalPages - sideWidth + 1, totalPages));
-        }
-
-        if (page >= totalPages - sideWidth - 1 - rightWidth) {
-            return range(1, sideWidth).concat(0, range(totalPages - sideWidth - 1 - rightWidth - leftWidth,
-                totalPages));
-        }
-
-        return range(1, sideWidth).concat(0, range(page - leftWidth, page + rightWidth), 0, range(totalPages -
-            sideWidth + 1, totalPages));
+    <!-- Sort Handler -->
+    <script>
+    function sortProducts() {
+        const map = {
+            default: 'index',
+            highToLow: 'sortByPriceHighToLow',
+            lowToHigh: 'sortByPriceLowToHigh'
+        };
+        const sel = document.getElementById('sortOption').value;
+        const action = map[sel] || 'index';
+        window.location.href = `index.php?page=main&controller=womenproducts&action=${action}`;
     }
+    </script>
 
+    <!-- Pagination Script -->
+    <script>
     $(function() {
-        var numberOfItems = $("#card-content #card").length;
-        var limitPerPage = 8; //How many card items visible per a page
-        var totalPages = Math.ceil(numberOfItems / limitPerPage);
-        var paginationSize = 7; //How many page elements visible in the pagination
-        var currentPage;
+        const totalItems = $('#card-content #card').length;
+        const limitPerPage = 8;
+        const totalPages = Math.ceil(totalItems / limitPerPage);
+        const paginationSize = 7;
+        let currentPage;
 
-        function showPage(whichPage) {
-            if (whichPage < 1 || whichPage > totalPages) return false;
+        function range(start, end) {
+            return Array.from({
+                length: end - start + 1
+            }, (_, i) => start + i);
+        }
 
-            currentPage = whichPage;
+        function getPageList(total, page, maxLen) {
+            const sideWidth = maxLen < 9 ? 1 : 2;
+            const leftWidth = (maxLen - sideWidth * 2 - 3) >> 1;
+            const rightWidth = leftWidth;
+            if (total <= maxLen) return range(1, total);
+            if (page <= maxLen - sideWidth - 1 - rightWidth) {
+                return range(1, maxLen - sideWidth - 1)
+                    .concat(0, range(total - sideWidth + 1, total));
+            }
+            if (page >= total - sideWidth - 1 - rightWidth) {
+                return range(1, sideWidth)
+                    .concat(0, range(total - sideWidth - 1 - rightWidth - leftWidth, total));
+            }
+            return range(1, sideWidth)
+                .concat(0, range(page - leftWidth, page + rightWidth), 0,
+                    range(total - sideWidth + 1, total));
+        }
 
-            $("#card-content #card").hide().slice((currentPage - 1) * limitPerPage, currentPage *
-                    limitPerPage)
+        function showPage(page) {
+            if (page < 1 || page > totalPages) return false;
+            currentPage = page;
+            $('#card-content #card')
+                .hide()
+                .slice((page - 1) * limitPerPage, page * limitPerPage)
                 .show();
 
-            $(".pagination li").slice(1, -1).remove();
+            const pag = $('.pagination').empty();
+            pag.append('<li class="page-item previous-page"><a class="page-link" href="#">Prev</a></li>');
 
-            getPageList(totalPages, currentPage, paginationSize).forEach(item => {
-                $("<li>").addClass("page-item").addClass(item ? "current-page" : "dots")
-                    .toggleClass("active", item === currentPage).append($("<a>").addClass(
-                            "page-link")
-                        .attr({
-                            href: "javascript:void(0)"
-                        }).text(item || "...")).insertBefore(".next-page");
+            getPageList(totalPages, page, paginationSize).forEach(item => {
+                const li = $('<li>')
+                    .addClass('page-item')
+                    .toggleClass('active', item === page)
+                    .toggleClass('dots', item === 0);
+                const a = $('<a>')
+                    .addClass('page-link')
+                    .attr('href', 'javascript:void(0)')
+                    .text(item || '...');
+                li.append(a);
+                pag.append(li);
             });
 
-            $(".previous-page").toggleClass("disable", currentPage === 1);
-            $(".next-page").toggleClass("disable", currentPage === totalPages);
+            pag.append('<li class="page-item next-page"><a class="page-link" href="#">Next</a></li>');
+            pag.find('.previous-page').toggleClass('disabled', page === 1);
+            pag.find('.next-page').toggleClass('disabled', page === totalPages);
+
             return true;
         }
 
-        $(".pagination").append(
-            $("<li>").addClass("page-item").addClass("previous-page").append($("<a>").addClass(
-                    "page-link")
-                .attr({
-                    href: "javascript:void(0)"
-                }).text("Prev")),
-            $("<li>").addClass("page-item").addClass("next-page").append($("<a>").addClass("page-link")
-                .attr({
-                    href: "javascript:void(0)"
-                }).text("Next"))
-        );
-
-        $("#card-content").show();
+        // Initialize
         showPage(1);
 
-        $(document).on("click", ".pagination li.current-page:not(.active)", function() {
-            return showPage(+$(this).text());
-        });
+        // Handle clicks
+        $(document).on('click', '.pagination li', function(e) {
+            e.preventDefault();
 
-        $(".next-page").on("click", function() {
-            return showPage(currentPage + 1);
-        });
+            let targetPage = null;
+            const li = $(this);
 
-        $(".previous-page").on("click", function() {
-            return showPage(currentPage - 1);
+            if (li.hasClass('previous-page')) {
+                targetPage = currentPage - 1;
+            } else if (li.hasClass('next-page')) {
+                targetPage = currentPage + 1;
+            } else {
+                const txt = parseInt(li.text(), 10);
+                if (!isNaN(txt)) targetPage = txt;
+            }
+
+            if (targetPage !== null) {
+                showPage(targetPage);
+
+                // native smooth scroll, much snappier
+                const top = $('#card-content').offset().top - 20;
+                window.scroll({
+                    top,
+                    behavior: 'smooth'
+                });
+            }
         });
     });
     </script>
-    <script>
-    function sortProducts() {
-        var sortOption = document.getElementById("sortOption");
-        var selectedValue = sortOption.value;
-
-        // Xử lý sự kiện khi lựa chọn giá trị
-        if (selectedValue === "highToLow") {
-            window.location.href = 'index.php?page=main&controller=womenproducts&action=sortByPriceHighToLow';
-        } else if (selectedValue === "lowToHigh") {
-            window.location.href = 'index.php?page=main&controller=womenproducts&action=sortByPriceLowToHigh';
-        }
-        // Các trường hợp sắp xếp khác nếu cần
-    }
-    </script>
-
 
 
 </main>

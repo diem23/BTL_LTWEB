@@ -157,10 +157,7 @@ if (isset($_SESSION['guest'])) {
             <li class="nav-item">
               <a class="nav-link" href="index.php?page=main&controller=menproducts&action=index">NAM</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="index.php?page=main&controller=shoesproducts&action=index">GIÀY
-                HOT</a>
-            </li>
+
 
             <li class="nav-item">
               <a class="nav-link" href="index.php?page=main&controller=contact&action=index">LIÊN HỆ</a>
