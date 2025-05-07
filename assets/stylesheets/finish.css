@@ -1,0 +1,90 @@
+.finish {
+    margin: 30px 0 0;
+    height: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.finish-content {
+    text-align: center;
+    padding: 140px 120px;
+    width: 100%;
+    margin: auto;
+    height: 680px;
+}
+.finish-content h1 {
+    font-size: 40px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(5, 95, 5);
+    padding-bottom: 30px;
+}
+.finish-content p {
+    font-size: 20px;
+    padding: 5px 0;
+    font-weight: 600;
+}
+.finish-content button {
+    background-color: #221F20;
+    color: #F7F8F9;
+    padding: 25px 20px;
+    margin: 30px 0 50px;
+    width: 25%;
+    border-radius: 35px;
+    font-size: 20px;
+    font-weight: 550;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    border: 1px solid #dddddd;
+}
+.finish-content button:hover {
+    background-color: #F7F8F9;
+    color: #221F20;
+    transition: 0.15s;
+}
+.detailOrder {
+    margin: 140px 80px 140px;
+}
+.detailOrder h1 {
+    text-transform: capitalize;
+    margin-bottom: 40px;
+    font-size: 38px;
+    text-align: center;
+}
+.info-order {
+    margin-bottom: 50px;
+}
+.info-order p {
+    margin-bottom: 20px;
+    font-size: 27px;
+}
+.info-order p span {
+    font-weight: bold;
+}
+.detailOrder table {
+    width: 100%;
+}
+.detailOrder th, .detailOrder td {
+    padding: 20px 5px;
+    height: 40px;
+    text-align: center;
+    font-size: 18px;
+}
+.back-button {
+    width: 20%;
+    font-weight: 550;
+    color: #F7F8F9;
+    background-color: #221F20;
+    font-size: 17px;
+    line-height: 24px;
+    padding: 15px 0;
+    cursor: pointer;
+    border-radius: 36px;
+    border: 1px solid #221F20;
+    margin-top: 50px;
+    margin-left: 40%;
+    text-transform: uppercase;
+}
+.back-button:hover {
+    color: #221F20;
+    background-color: #F7F8F9;
+    transition: 0.15s;
+}

@@ -1,0 +1,157 @@
+.cart {
+    margin: 100px 50px 0 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.cart-content-left {
+    flex: 67;
+    padding-right: 12px;
+}
+
+.cart-content-right {
+    flex: 33;
+}
+.cart-content-header {
+    margin-bottom: 40px;
+}
+.cart-content-left table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.cart-content-left table th {
+    padding-bottom: 20px;
+    font-size: 15px;
+    line-height: 16px;
+    color: #333;
+    border-bottom: 1px solid #dddddd;
+}
+
+.cart-content-left table td {
+    border-bottom: 1px solid #dddddd;
+    padding: 15px 0;
+}
+
+.cart-content-left table p {
+    color: #333;
+}
+
+.cart-content-left input {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+    text-align: center;
+    padding-left: 13px;
+}
+
+.cart-content-left i {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.cart-content-left td:first-child img {
+    width: 90%;
+    height: auto;
+}
+
+.cart-content-left td:nth-child(2) {
+    font-size: 17px;
+    padding: 0 5px;
+}
+
+.cart-content-left td:nth-child(3) img {
+    width: 40px;
+    height: 40px;
+}
+
+.cart-content-left td:nth-child(4) {
+    padding-left: 10px;
+}
+
+.cart-content-left td:nth-child(5) {
+    font-size: 19px;
+}
+
+.cart-content-left td:nth-child(6) {
+
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .cart-content-left table td:nth-child(2) {
+        font-size: 14px;
+        padding: 0 5px;
+    }
+
+    .cart-content-left td:nth-child(4) {
+        padding-left: 5px;
+    }
+
+    .cart-content-left td:nth-child(5) {
+        font-size: 16px;
+    }
+}
+.cart-content-right {
+    margin-left: 30px;
+}
+.total-money-content {
+    background-color: rgba(247, 248, 249, 0.5);
+    padding: 25px 0 25px 25px;
+    border-bottom: 1px solid #dddddd;
+    margin-bottom: 30px;
+}
+.cart-content-right td:nth-child(2) {
+    text-align: right;
+}
+.total-money-content td {
+    padding-bottom: 18px;
+    color: #6c6d70;
+}
+.cart-content-right-button button {
+    width: 100%;
+    font-weight: 550;
+    color: #F7F8F9;
+    background-color: #221F20;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 13px 0;
+    cursor: pointer;
+    border-radius: 16px 0;
+    border: 1px solid #221F20;
+}
+.cart-content-right-button button:hover{
+    background-color: white;
+    color: #221F20;
+    transition: 0.15s;
+}
+.noProduct {
+    color: #ac2f33;
+    font-size: 19px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    display: none;
+}
+.btn-quantity {
+    margin: 5px;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    background-color: #fa9c9c;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-quantity:hover {
+    background-color: #e0e0e0;
+}
+.icon-button {
+    border: none;
+    background: none;
+    padding: 0; /* Optional: Remove padding if you want the icon to be closer to the edge */
+    cursor: pointer;
+}
+/* CSS cho bảng */

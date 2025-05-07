@@ -1,0 +1,221 @@
+.about--info {
+    margin: 0 auto;
+}
+
+.text--italic {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.text--bold {
+    margin-top: 25px;
+    font-size: 30px;
+    font-weight: bolder;
+    text-align: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 45px;
+}
+
+.text--bold:before {
+    content: '';
+    position: absolute;
+    height: 3px;
+    width: 65px;
+    background: linear-gradient(45deg, #00853e, #50c878);
+    bottom: 0;
+}
+
+.para--short {
+    display: block;
+    max-width: 100vw;
+    margin-top: 50px;
+    font-size: 15px;
+    color: #b3b3b3;
+    text-align: center;
+    white-space: pre-line;
+    width: 965px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card--personal {
+    margin-top: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    background: hsla(39, 100%, 77%, 1);
+    background-color: #f6f6f6;
+}
+
+.card--personal-info {
+    width: 300px;
+    height: 400px;
+    text-align: center;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0 30px;
+    position: relative;
+    z-index: 99;
+    background-color: #292929;
+}
+
+.card-img {
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    transition: 0.25s;
+    margin: 0 auto;
+    transform: translateY(25px);
+    border-radius: 50%;
+    border: 2px solid #f2726a;
+    cursor: pointer;
+}
+
+.card-img:hover {
+    width: 100%;
+    height: 100%;
+    border-radius: unset;
+    border: unset;
+    transform: unset;
+}
+
+.card__img:hover {
+    width: 100%;
+    height: 100%;
+    border-radius: unset;
+    border: unset;
+    transform: unset;
+}
+.comment-card {
+    border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease-in-out;
+        height: 100%; /* Đảm bảo chiều cao của các card đều nhau */
+        display: flex;
+        flex-direction: column;
+}
+
+.comment-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+    text-align: center;
+}
+
+.card-title {
+    color: #a19f9f;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    color: #666;
+}
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.name {
+    margin-top: 40px;
+    color: white;
+}
+
+.role {
+    color: #f2726a;
+}
+
+.card-social a {
+    text-decoration: none;
+    color: white;
+    margin: 25px 20px 40px;
+    display: inline-block;
+    font-size: 25px;
+    transition: 0.25s;
+}
+
+.youtube:hover {
+    color: #FF0000;
+}
+
+.facebook:hover {
+    color: #0881ED;
+}
+
+.github:hover {
+    color: black;
+}
+
+.about--service .text--bold:before {
+    background: linear-gradient(45deg, #860025, #C85061);
+}
+
+.about-container {
+    margin-top: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100vw;
+}
+
+.service--item {
+    margin: 10px;
+    width: 585px;
+    height: 303px;
+    border-radius: 30px;
+    background-position: bottom bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition-duration: 0.5s;
+    transition-timing-function: linear;
+    transition-delay: 0s;
+    transition-property: all;
+    cursor: pointer;
+}
+.comment-card {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .comment-card:hover {
+    transform: scale(0.9);
+  }
+
+  .comment-card:nth-child(odd) {
+    height: 450px;
+  }
+
+  .comment-card:nth-child(even) {
+    height: 500px;
+  }
+@media screen and (min-width: 1024px) {
+    .card--personal {
+        height: 500px;
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .card--personal {
+        flex-wrap: wrap;
+    }
+
+    .card--personal-info {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
