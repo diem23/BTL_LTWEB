@@ -34,6 +34,9 @@ a {
 }
 
 #header {
+  position: fixed;
+  top: 0;
+  left: 0;
   background: rgb(167, 165, 165);
   transition: all 0.5s;
   z-index: 997;
