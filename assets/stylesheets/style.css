@@ -1,5 +1,6 @@
 body {
-  font-family: 'Hanken Grotesk'; 
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   color: #4d4643;
 }
 
@@ -9,12 +10,12 @@ body {
 }
 
 a {
-  text-decoration: none; 
+  text-decoration: none;
 }
 
 /* text */
 .red {
-  color:rgb(233, 37, 37);
+  color: rgb(233, 37, 37);
   font-weight: 550;
 }
 .green {
@@ -25,13 +26,12 @@ a {
 /* header */
 
 .navbar {
-  background: #f6f6f6; 
+  background: #f6f6f6;
 }
 
 .navbar:hover {
-  background: #ffffff; 
+  background: #ffffff;
 }
-
 
 #header {
   background: rgb(167, 165, 165);
@@ -50,7 +50,7 @@ a {
   text-transform: uppercase;
 }
 
-#header .logo a{
+#header .logo a {
   font-size: 20px;
   color: rgb(233, 37, 37);
 }
@@ -61,304 +61,328 @@ a {
   max-height: 25px;
 }
 
-
 .navbar {
   padding: 0;
 }
 
-.navbar a, .navbar a:focus {
+.navbar a,
+.navbar a:focus {
   display: flex;
-  align-items: center; 
-  justify-content: space-between; 
+  align-items: center;
+  justify-content: space-between;
   padding: 10px 0 10px 30px;
-  font-family: 'Hanken Grotesk'; 
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 13px;
   font-weight: 600;
   color: #4d4643 !important;
   white-space: nowrap;
   text-transform: uppercase;
   transition: 0.3s;
-} 
-.navbar a i, .navbar a:focus i {
+}
+.navbar a i,
+.navbar a:focus i {
   font-size: 10px;
   line-height: 0;
   margin-left: 5px;
 }
 .modal-dialog-centered {
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      height: 100vh;
-    }
-	#size-table {
-      max-width: 800px; /* Đặt kích thước tối đa cho modal */
-    }
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 100vh;
+}
+#size-table {
+  max-width: 800px; /* Đặt kích thước tối đa cho modal */
+}
 
-    .modal-body .table {
-      width: 100%; /* Đặt chiều rộng của bảng là 100% */
-    }
-  .nav-item a{
-    font-size: 15px;
-  }
+.modal-body .table {
+  width: 100%; /* Đặt chiều rộng của bảng là 100% */
+}
+.nav-item a {
+  font-size: 15px;
+}
 .nav-item a:hover {
   color: red !important;
 }
-/*#carouselExampleControls .carousel-inner .carousel-item img {
-  border-radius: 80px 0 80px 0; /* Điều này sẽ thêm border-radius chỉ ở 2 góc đối diện */
 
-/* Thêm các quy tắc CSS để tùy chỉnh giao diện của section giỏ hàng 
-#cartSection {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 600px; /* Điều chỉnh độ rộng của section giỏ hàng 
-  background-color: #eee;
-  z-index: 1000;
-  overflow-y: auto; /* Cho phép cuộn nếu nội dung quá dài 
-  padding: 20px; /* Thêm padding để nội dung không bám sát mép 
-  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1); /* Thêm bóng cho section 
-  display: none;
+/* #carouselExampleControls .carousel-inner .carousel-item img {
+  border-radius: 80px 80px 80px 80px;
 } */
 
+/* Carousel wrapper */
+#myCarousel {
+  width: 100%; /* ← use 100% instead of 100vw */
+  height: 100vh; /* or use calc if you have a header */
+  overflow: hidden; /* hide any overflowed bits */
+  position: relative;
+}
 
+/* 3) The image covers entire container */
+#myCarousel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: opacity 0.5s ease-in-out;
+}
+/* 4) Prev/Next buttons */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+  border: none;
+  padding: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 24px;
+  z-index: 10;
+}
+#prevBtn {
+  left: 24px;
+}
+#nextBtn {
+  right: 24px;
+}
+/* 5) Indicators (dots) */
+#carouselIndicators {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+.indicator {
+  width: 16px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.indicator.active {
+  width: 32px;
+  background: rgba(255, 255, 255, 1);
+}
+@import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Montserrat:wght@400;700&family=Roboto&display=swap");
 
+.about--info {
+  margin: 0 auto;
+}
 
-@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Montserrat:wght@400;700&family=Roboto&display=swap');
+.text--italic {
+  font-family: "Kaushan Script", cursive;
+  font-size: 24px;
+  text-align: center;
+  margin-top: 20px;
+}
 
-    .about--info {
-        margin: 0 auto;
-    }
+.text--bold {
+  margin-top: 25px;
+  font-size: 30px;
+  font-weight: bolder;
+  text-align: center;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 45px;
+}
 
-    .text--italic {
-        font-family: 'Kaushan Script', cursive;
-        font-size: 24px;
-        text-align: center;
-        margin-top: 20px;
-    }
+.text--bold:before {
+  content: "";
+  position: absolute;
+  height: 3px;
+  width: 65px;
+  background: linear-gradient(45deg, #00853e, #50c878);
+  bottom: 0;
+}
 
-    .text--bold {
-        margin-top: 25px;
-        font-size: 30px;
-        font-weight: bolder;
-        text-align: center;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding-bottom: 45px;
-    }
+.para--short {
+  display: block;
+  max-width: 100vw;
+  margin-top: 50px;
+  font-size: 15px;
+  color: #b3b3b3;
+  text-align: center;
+  white-space: pre-line;
+  width: 965px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-    .text--bold:before {
-        content: '';
-        position: absolute;
-        height: 3px;
-        width: 65px;
-        background: linear-gradient(45deg, #00853e, #50c878);
-        bottom: 0;
-    }
+.card--personal {
+  margin-top: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  background: hsla(39, 100%, 77%, 1);
+  background: linear-gradient(45deg, #00853e, #50c878);
+}
 
-    .para--short {
-        display: block;
-        max-width: 100vw;
-        margin-top: 50px;
-        font-size: 15px;
-        color: #b3b3b3;
-        text-align: center;
-        white-space: pre-line;
-        width: 965px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+.card--personal-info {
+  width: 300px;
+  height: 400px;
+  text-align: center;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 30px;
+  position: relative;
+  z-index: 99;
+  background-color: #242628;
+}
 
-    .card--personal {
-        margin-top: 90px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100vw;
-        background: hsla(39, 100%, 77%, 1);
-        background: linear-gradient(45deg, #00853e, #50c878);
-    }
+.card-img {
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  transition: 0.25s;
+  margin: 0 auto;
+  transform: translateY(25px);
+  border-radius: 50%;
+  border: 2px solid #f2726a;
+  cursor: pointer;
+}
 
-    .card--personal-info {
-        width: 300px;
-        height: 400px;
-        text-align: center;
-        border-radius: 10px;
-        overflow: hidden;
-        margin: 0 30px;
-        position: relative;
-        z-index: 99;
-        background-color: #242628;
-    }
+.card-img:hover {
+  width: 100%;
+  height: 100%;
+  border-radius: unset;
+  border: unset;
+  transform: unset;
+}
 
-    .card-img {
-        width: 120px;
-        height: 120px;
-        overflow: hidden;
-        transition: 0.25s;
-        margin: 0 auto;
-        transform: translateY(25px);
-        border-radius: 50%;
-        border: 2px solid #f2726a;
-        cursor: pointer;
-    }
+.card__img:hover {
+  width: 100%;
+  height: 100%;
+  border-radius: unset;
+  border: unset;
+  transform: unset;
+}
 
-    .card-img:hover {
-        width: 100%;
-        height: 100%;
-        border-radius: unset;
-        border: unset;
-        transform: unset;
-    }
+.name {
+  margin-top: 40px;
+  color: white;
+}
 
-    .card__img:hover {
-        width: 100%;
-        height: 100%;
-        border-radius: unset;
-        border: unset;
-        transform: unset;
-    }
+.role {
+  color: #f2726a;
+}
 
-    .name {
-        margin-top: 40px;
-        color: white;
-    }
+.card-social a {
+  text-decoration: none;
+  color: white;
+  margin: 25px 20px 40px;
+  display: inline-block;
+  font-size: 25px;
+  transition: 0.25s;
+}
 
-    .role {
-        color: #f2726a;
-    }
+.youtube:hover {
+  color: #ff0000;
+}
 
-    .card-social a {
-        text-decoration: none;
-        color: white;
-        margin: 25px 20px 40px;
-        display: inline-block;
-        font-size: 25px;
-        transition: 0.25s;
-    }
+.facebook:hover {
+  color: #0881ed;
+}
 
-    .youtube:hover {
-        color: #FF0000;
-    }
+.github:hover {
+  color: black;
+}
 
-    .facebook:hover {
-        color: #0881ED;
-    }
+.about--service .text--bold:before {
+  background: linear-gradient(45deg, #860025, #c85061);
+}
 
-    .github:hover {
-        color: black;
-    }
+.about-container {
+  margin-top: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100vw;
+}
 
-    .about--service .text--bold:before {
-        background: linear-gradient(45deg, #860025, #C85061);
-    }
+.service--item {
+  margin: 10px;
+  width: 585px;
+  height: 303px;
+  border-radius: 30px;
+  background-position: bottom bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #ffffff;
+  font-size: 36px;
+  font-weight: 600;
+  font-family: "Hanken Grotesk";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition-duration: 0.5s;
+  transition-timing-function: linear;
+  transition-delay: 0s;
+  transition-property: all;
+  cursor: pointer;
+}
 
-    .about-container {
-        margin-top: 90px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        width: 100vw;
-    }
+.first-item:hover {
+  background-image: unset;
+  background-color: #e0003e;
+}
 
-    .service--item {
-        margin: 10px;
-        width: 585px;
-        height: 303px;
-        border-radius: 30px;
-        background-position: bottom bottom;
-        background-size: cover;
-        background-repeat: no-repeat;
-        color: #ffffff;
-        font-size: 36px;
-        font-weight: 600;
-        font-family: 'Hanken Grotesk'; 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition-duration: 0.5s;
-        transition-timing-function: linear;
-        transition-delay: 0s;
-        transition-property: all;
-        cursor: pointer;
-    }
+.second-item:hover {
+  background-image: unset;
+  background-color: #00aeef;
+}
 
-    .first-item {
-        background-image: 
-            url("https://scontent.fsgn5-8.fna.fbcdn.net/v/t39.30808-6/409223102_752612516902308_2531060251189730235_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=3635dc&_nc_ohc=ncQAmR06qecAX9fZCRd&_nc_ht=scontent.fsgn5-8.fna&oh=00_AfDvyaLq3J1Q12n70MTvT0PYujuRh7jwtu7e09lybSgysw&oe=657C3536");
-    }
+.third-item:hover {
+  background-image: unset;
+  background-color: #ebec41;
+}
 
-    .second-item {
-        background-image: 
-        url("https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/408476988_752612923568934_3568211225505871011_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=3635dc&_nc_ohc=BhQUamvIM5sAX8W4_Q8&_nc_ht=scontent.fsgn5-9.fna&oh=00_AfAgjuOv0ug8LunVZw3OP21ln59w5CEVM3OILDgsAvUQJg&oe=657CE76B");
-    }
+.fourth-item:hover {
+  background-image: unset;
+  background-color: #a12a9b;
+}
 
-    .third-item {
-        background-image: 
-        url("https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/409380612_752612616902298_2220998326585860416_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=3635dc&_nc_ohc=pbcc_ISrhQ8AX_C5TWx&_nc_ht=scontent.fsgn5-10.fna&oh=00_AfAdykMKG063NFPCvr0EPll01SBF2lSXIkeN36rgQ01f2A&oe=657B7002");
-    }
-
-    .fourth-item {
-        background-image:
-        url("https://scontent.fsgn5-3.fna.fbcdn.net/v/t39.30808-6/393620007_750802867083273_7190638645979453832_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=3635dc&_nc_ohc=tJUO-1IxwpUAX8YoYHt&_nc_ht=scontent.fsgn5-3.fna&oh=00_AfCgAUDdEe0tWbLAYnR8tY-FX_evB0qF-o7rURFO8qY_sw&oe=657CDDB8");
-    }
-
-    .first-item:hover {
-        background-image: unset;
-        background-color: #E0003E;
-    }
-
-    .second-item:hover {
-        background-image: unset;
-        background-color: #00AEEF;
-    }
-
-    .third-item:hover {
-        background-image: unset;
-        background-color: #EBEC41;
-    }
-
-    .fourth-item:hover {
-        background-image: unset;
-        background-color: #A12A9B;
-    }
-
-    @media screen and (min-width: 1024px) {
-        .card--personal {
-            height: 500px;
-        }
-    }
-
-    @media screen and (max-width: 1023px) {
-        .card--personal {
-            flex-wrap: wrap;
-        }
-
-        .card--personal-info {
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-    }
-
-  .icon-cart span{
-        font-size: 12px;
-        position: absolute;
-        background-color: red;
-        width: 15px;
-        height: 15px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        color: #fff;
-        top: 50%;
-        right: 30px;
+@media screen and (min-width: 1024px) {
+  .card--personal {
+    height: 500px;
   }
-  .price-option {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+}
+
+@media screen and (max-width: 1023px) {
+  .card--personal {
+    flex-wrap: wrap;
   }
+
+  .card--personal-info {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+.icon-cart span {
+  font-size: 12px;
+  position: absolute;
+  background-color: red;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: #fff;
+  top: 50%;
+  right: 30px;
+}
+.price-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
