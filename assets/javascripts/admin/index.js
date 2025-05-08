@@ -12,3 +12,6 @@ $(".btn-delete").click(function (e) {
     $("#DeleteAdminModal input[name='username']").val(username);
     $('#DeleteAdminModal').modal('show');
 });
+$(document).ready(function () {
+    $('#tab-admin').DataTable();
+});
