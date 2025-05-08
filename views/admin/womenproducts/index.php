@@ -78,16 +78,16 @@ require_once('views/admin/content_layouts.php'); ?>
                         <table id="tab-product" class="table table-bordered table-striped mt-3 shadow">
                             <thead>
                                 <tr class="text-center">
-                                    <th scope="col" class="d-none d-lg-table-cell">STT</th>
-                                    <th scope="col" >Tên sản phẩm</th>
-                                    <th scope="col" class="d-none d-lg-table-cell">Giá </th>
-                                    <th scope="col" class="d-none d-lg-table-cell">Mô tả</th>
-                                    <th scope="col" class="d-none d-lg-table-cell">Nội dung</th>
-                                    <th scope="col">Hình ảnh</th>
-                                    <th scope="col">Hình ảnh phụ 1</th>
-                                    <th scope="col">Hình ảnh phụ 2</th>
-                                    <th scope="col">Hình ảnh phụ 3</th>
-                                    <th scope="col">Thao tác</th>
+                                    <th scope="col fs-6" class="d-none d-lg-table-cell">STT</th>
+                                    <th scope="col fs-6" >Tên sản phẩm</th>
+                                    <th scope="col fs-6" class="d-none d-lg-table-cell">Giá </th>
+                                    <th scope="col fs-6" class="d-none d-lg-table-cell">Mô tả</th>
+                                    <th scope="col fs-6" class="d-none d-lg-table-cell">Nội dung</th>
+                                    <th scope="col fs-6">Hình ảnh</th>
+                                    <th scope="col fs-6">Hình ảnh phụ 1</th>
+                                    <th scope="col fs-6">Hình ảnh phụ 2</th>
+                                    <th scope="col fs-6">Hình ảnh phụ 3</th>
+                                    <th scope="col fs-6">Thao tác</th>
                                 </tr>
                             </thead>
 
@@ -101,19 +101,19 @@ require_once('views/admin/content_layouts.php'); ?>
                                     
                                    
                                     <tr class="text-center">
-                                                    <td class="d-none d-lg-table-cell">
+                                                    <td class="fs-6 d-none d-lg-table-cell">
                                                     <?php  echo $index ; ?>
                                                    </td>
                                                     <td>
                                                     <?php  echo $womenproduct->name ; ?>  
                                                     </td>
-                                                    <td class="d-none d-lg-table-cell">
+                                                    <td class="fs-6 d-none d-lg-table-cell">
                                                     <?php  echo $womenproduct->price  ; ?>  
                                                     </td>
-                                                    <td class="d-none d-lg-table-cell">
+                                                    <td class="fs-6 d-none d-lg-table-cell">
                                                     <?php  echo  $womenproduct->description  ; ?>  
                                                     </td>
-                                                    <td class="d-none d-lg-table-cell">
+                                                    <td class="fs-6 d-none d-lg-table-cell">
                                                     <?php  echo  $womenproduct->content  ; ?>     
                                                     </td>
                                                     <td >

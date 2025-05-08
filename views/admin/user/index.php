@@ -130,13 +130,13 @@ require_once('views/admin/content_layouts.php'); ?>
                             </div>
 
                             <table class="table table-bordered table-striped mt-3 shadow" id="tab-user">
-                                <thead>
+                                <thead >
                                     <tr class="text-center">
-                                        <th class="d-none d-lg-table-cell">STT</th>
-                                        <th>Hình ảnh</th>
-                                        <th class="d-none d-lg-table-cell">Họ và tên lót</th>
-                                        <th>Tên</th>
-                                        <th>Thao tác</th>
+                                        <th class="d-none d-lg-table-cell fs-6">STT</th>
+                                        <th class="fs-6">Hình ảnh</th>
+                                        <th class="d-none d-lg-table-cell fs-6">Họ và tên lót</th>
+                                        <th class="fs-6">Tên</th>
+                                        <th class="fs-6">Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -144,10 +144,10 @@ require_once('views/admin/content_layouts.php'); ?>
                                     $index = 1;
                                     foreach ($user as $user) {
                                         echo "<tr class='text-center'>";
-                                        echo "<td class='align-middle d-none d-lg-table-cell'>" . $index . "</td>";
-                                        echo "<td><img src='$user->profile_photo' class='border rounded-circle p-1' width='72' height='72'></td>";
-                                        echo "<td class='align-middle d-none d-lg-table-cell'>" . $user->fname . "</td>";
-                                        echo "<td class='align-middle'>" . $user->lname . "</td>";
+                                        echo "<td class='align-middle d-none d-lg-table-cell fs-6'>" . $index . "</td>";
+                                        echo "<td><img src='$user->profile_photo' class='border rounded-circle p-1 fs-6' width='72' height='72'></td>";
+                                        echo "<td class='align-middle d-none d-lg-table-cell fs-6'>" . $user->fname . "</td>";
+                                        echo "<td class='align-middle fs-6'>" . $user->lname . "</td>";
                                         echo "<td class='align-middle'>
 											<button class='btn-edit btn btn-primary btn-xs' data-bs-email='$user->email' data-bs-fname='$user->fname' data-bs-lname='$user->lname' data-bs-gender='$user->gender' data-bs-age='$user->age' data-bs-phone='$user->phone' data-bs-img='$user->profile_photo' data-bs-target='#EditUserModal' data-bs-toggle='modal'><svg xmlns='http://www.w3.org/2000/svg' width='13' height='13' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'>
                                             <path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/>
