@@ -40,7 +40,7 @@ class CartController extends BaseController
 					'product_image' => $_POST["product_image"],
 					'product_price' => $_POST["product_price"],
 					'product_sale' => $_POST["product_sale"],
-					'product_quantity' => $_POST["product_quantity"],
+					'product_quantity' => (int)$_POST["product_quantity"],
 					'product_size' => $_POST["size"]
 				);
 				$_SESSION["shopping_cart"][] = $item ;
@@ -55,7 +55,7 @@ class CartController extends BaseController
 				'product_image' => $_POST["product_image"],
 				'product_price' => $_POST["product_price"],
 				'product_sale' => $_POST["product_sale"],
-				'product_quantity' => $_POST["product_quantity"],
+				'product_quantity' => (int)$_POST["product_quantity"],
 				'product_size' => $_POST["size"]
 			);
 			$_SESSION["shopping_cart"][] = $item ;

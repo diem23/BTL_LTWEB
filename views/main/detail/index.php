@@ -229,7 +229,7 @@ foreach ($products as $product) {
                                 value="<?= htmlspecialchars($product->img, ENT_QUOTES) ?>">
                             <input type="hidden" name="product_price" value="<?= $product->price ?>">
                             <input type="hidden" name="product_sale" value="<?= $product->sale ?>">
-
+                            <input type="hidden" name="product_quantity" value=1>
                             <!-- Add to Cart -->
                             <div class="mb-3">
                                 <button type="submit" name="addcart" id="addToCartBtn"
