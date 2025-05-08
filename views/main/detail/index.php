@@ -1,84 +1,181 @@
 <?php
-  include_once('views/main/navbar.php');
-  $id = $_GET['id'];
-  foreach ($products as $product) {
-    if ($id == $product->id){
+include_once('views/main/navbar.php');
+$id = $_GET['id'];
+foreach ($products as $product) {
+    if ($id == $product->id) {
 ?>
+<?php
+        // Map typeid to label and link
+        $crumbMap = [
+            0 => ['label' => 'Men',   'url' => 'index.php?page=main&controller=menproducts&action=index'],
+            1 => ['label' => 'Women', 'url' => 'index.php?page=main&controller=womenproducts&action=index'],
+            2 => ['label' => 'Shoes', 'url' => 'index.php?page=main&controller=shoesproducts&action=index'],
+        ];
+        $middle = $crumbMap[$product->typeid] ?? null;
+        ?>
 <style>
 .card-img-top:hover {
     transform: scale(0.9);
     transition: transform 0.3s ease;
 }
+
+.breadcrumb-nav {
+    margin-top: 76px;
+    padding: .5rem 0;
+}
+
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    content: ">";
+    color: #6c757d;
+}
+
+.breadcrumb-item a {
+    color: #0d6efd;
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+    color: #495057;
+    font-weight: 600;
+}
+
+.product-thumb {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 2px solid transparent;
+    transition: transform .2s, border-color .2s;
+    cursor: pointer;
+}
+
+.product-thumb:hover {
+    transform: scale(1.1);
+}
+
+.product-thumb.active {
+    border-color: #0d6efd;
+    /* Bootstrap primary */
+}
+
+.feature-icon {
+    width: 48px;
+    height: 48px;
+}
+
+.nav-tabs .nav-link {
+    color: #6c757d;
+}
+
+/* keep the active tab in Bootstrap’s blue */
+.nav-tabs .nav-link.active {
+    color: rgb(0, 0, 0);
+}
+
+/* optional: darker on hover */
+.nav-tabs .nav-link:hover {
+    color: #495057;
+}
 </style>
-<div class="container-fluid py-2" style="margin-top: 100px; background-color: #f6f6f6">
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
     <div class="container">
-        <a href="index.php?page=main&controller=layouts&action=index" class="fw-bold me-2">Home</a>&nbsp;>
-        <?php if($product->typeid == 0 ) {?>
-        <a href="index.php?page=main&controller=menproducts&action=index"
-            class=" fw-bold me-2">&nbsp;&nbsp;Men</a>&nbsp;>
-        <?php } ?>
-        <?php if($product->typeid == 1 ) {?>
-        <a href="index.php?page=main&controller=womenproducts&action=index"
-            class=" fw-bold me-2">&nbsp;&nbsp;Women</a>&nbsp;>
-        <?php } ?>
-        <?php if($product->typeid == 2 ) {?>
-        <a href="index.php?page=main&controller=shoesproducts&action=index"
-            class=" fw-bold me-2">&nbsp;&nbsp;Shoes</a>&nbsp;>
-        <?php } ?>
-        <a href="" class=" fw-bold me-2">&nbsp;&nbsp;<?php echo $product->name;?></a>
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a href="index.php?page=main&controller=layouts&action=index">Home</a>
+            </li>
+
+            <?php if ($middle): ?>
+            <li class="breadcrumb-item">
+                <a href="<?= $middle['url'] ?>"><?= $middle['label'] ?></a>
+            </li>
+            <?php endif; ?>
+
+            <li class="breadcrumb-item active" aria-current="page">
+                <?= htmlspecialchars($product->name, ENT_QUOTES) ?>
+            </li>
+        </ol>
     </div>
-</div>
+</nav>
 <div class="container-fluid py-2 px-5" style="margin-top:20px">
     <section class="product">
         <div class="container1">
             <div class="product-content row">
                 <div class="product-content-left">
-                    <div class="product-content-left-small-img">
-                        <img src="<?php echo $product->img;?>" onclick="changeImage(this)" alt="">
-                        <img src="<?php echo $product->img1;?>" onclick="changeImage(this)" alt="">
-                        <img src="<?php echo $product->img2;?>" onclick="changeImage(this)" alt="">
-                        <img src="<?php echo $product->img3;?>" onclick="changeImage(this)" alt="">
-                    </div>
-                    <div class="product-content-left-big-img" style="margin-left:10px">
-                        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                <!-- Add more carousel items for other images -->
-                                <div class="carousel-item active">
-                                    <img id="fullImage" src="<?php echo $product->img;?>" alt="">
-                                </div>
-                                <div class="carousel-item active">
-                                    <img id="fullImage" src="<?php echo $product->img1;?>" alt="">
-                                </div>
+                    <!-- 1. WRAPPER: flex container -->
+                    <div class="d-flex align-items-start mb-4">
+                        <!-- 2. THUMBNAILS: vertical list -->
+                        <div class="d-flex flex-column gap-3" style="flex: 0 0 120px;">
+                            <?php
+                                    $imgs = [$product->img, $product->img1, $product->img2, $product->img3];
+                                    foreach ($imgs as $i => $url): ?>
+                            <img src="<?= htmlspecialchars($url, ENT_QUOTES) ?>"
+                                class="product-thumb <?php if ($i === 0) echo 'active'; ?>" data-index="<?= $i ?>"
+                                alt="Thumbnail <?= $i + 1 ?>">
+                            <?php endforeach; ?>
+                        </div>
 
-                                <div class="carousel-item">
-                                    <img id="fullImage" src="<?php echo $product->img2;?>" alt="">
+                        <!-- 3. MAIN CAROUSEL -->
+                        <div class="flex-grow-1 ms-3">
+                            <div id="productCarousel" class="carousel slide" data-bs-interval="false">
+                                <div class="carousel-inner rounded shadow-sm">
+                                    <?php foreach ($imgs as $i => $url): ?>
+                                    <div class="carousel-item <?= $i === 0 ? 'active' : '' ?>">
+                                        <img src="<?= htmlspecialchars($url, ENT_QUOTES) ?>" class="d-block w-100"
+                                            alt="Product image <?= $i + 1 ?>">
+                                    </div>
+                                    <?php endforeach; ?>
                                 </div>
-                                <div class="carousel-item">
-                                    <img id="fullImage" src="<?php echo $product->img3;?>" alt="">
-                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel"
+                                    data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                    <span class="visually-hidden">Prev</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel"
+                                    data-bs-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
                             </div>
-                            <button class="carousel-control-prev" type="button"
-                                data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button"
-                                data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
                         </div>
                     </div>
                 </div>
 
                 <div class="product-content-right">
-                    <div class="product-name">
-                        <h1 style="text-transform:uppercase; font-size:26px; line-height:1.1;">
-                            <?php echo $product->name;?></h1>
-                        <p>Thương hiệu: Routine</p>
+                    <div>
+                        <!-- Product Name & Brand -->
+                        <h1 class="text-uppercase fs-3 fs-md-2 fw-bold mb-1">
+                            <?= htmlspecialchars($product->name, ENT_QUOTES) ?>
+                        </h1>
+                        <p class="text-muted mb-3">Thương hiệu: Routine</p>
                     </div>
-                    <div class="product-price">
-                        <p style="font-weight:bold;"><?php echo number_format($product->price) ?>đ</p>
+
+                    <div class="d-flex align-items-baseline mb-4">
+                        <!-- Discounted price -->
+                        <span class="fs-2 fw-bold">
+                            <?= number_format(
+                                        ($product->price * (100 - $product->sale)) / 100,
+                                        0,
+                                        ',',
+                                        '.'
+                                    ) ?>₫
+                        </span>
+
+                        <!-- Original price, only if there’s a sale -->
+                        <?php if ($product->sale > 0): ?>
+                        <span class="ms-3 fs-5 text-muted text-decoration-line-through">
+                            <?= number_format($product->price, 0, ',', '.') ?>₫
+                        </span>
+                        <?php endif; ?>
                     </div>
                     <div class="special-offer">
                         <div class="offer-content">
@@ -101,297 +198,229 @@
                             </div>
                         </div>
                         <form action="index.php?page=main&controller=cart&action=submit" method="POST">
-                            <div class="product-size-input">
-                                <label>
-                                    <input type="radio" name="size" value="S" checked>
-                                    <span>S</span>
-                                </label>
-                                <label>
-                                    <input type="radio" name="size" value="M">
-                                    <span>M</span>
-                                </label>
-                                <label>
-                                    <input type="radio" name="size" value="L">
-                                    <span>L</span>
-                                </label>
-                                <label>
-                                    <input type="radio" name="size" value="XL">
-                                    <span>XL</span>
-                                </label>
-                                <label>
-                                    <input type="radio" name="size" value="XXL">
-                                    <span>XXL</span>
-                                </label>
+                            <!-- Size selector -->
+                            <div class="product-size mb-4">
+                                <!-- <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <label for="size-options" class="fw-semibold mb-0">Size:</label>
+                                    <a href="#" class="text-decoration-underline text-secondary" data-bs-toggle="modal"
+                                        data-bs-target="#sizeGuideModal">
+                                        <i class="bi bi-pen-fill"></i> Hướng dẫn chọn size
+                                    </a>
+                                </div> -->
+                                <div id="size-options" class="d-flex flex-wrap gap-2">
+                                    <?php
+                                            $sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+                                            foreach ($sizes as $i => $sz):
+                                            ?>
+                                    <input type="radio" class="btn-check" name="size" id="size-<?= $sz ?>"
+                                        value="<?= $sz ?>" autocomplete="off" <?= $i === 0 ? 'checked' : '' ?>>
+                                    <label class="btn btn-outline-secondary" for="size-<?= $sz ?>">
+                                        <?= $sz ?>
+                                    </label>
+                                    <?php endforeach; ?>
+                                </div>
                             </div>
 
-                    </div>
-                    <br>
+                            <!-- Hidden product data -->
+                            <input type="hidden" name="product_id" value="<?= $product->id ?>">
+                            <input type="hidden" name="product_name"
+                                value="<?= htmlspecialchars($product->name, ENT_QUOTES) ?>">
+                            <input type="hidden" name="product_image"
+                                value="<?= htmlspecialchars($product->img, ENT_QUOTES) ?>">
+                            <input type="hidden" name="product_price" value="<?= $product->price ?>">
+                            <input type="hidden" name="product_sale" value="<?= $product->sale ?>">
 
+                            <!-- Add to Cart -->
+                            <div class="mb-3">
+                                <button type="submit" name="addcart" id="addToCartBtn"
+                                    class="btn btn-dark w-100 py-3 d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-bag-fill me-2"></i>
+                                    <span class="fw-medium">Thêm vào giỏ hàng</span>
+                                </button>
+                            </div>
+                        </form>
 
-
-                    <input type="hidden" value="<?php echo $product->id ?>" name="product_id">
-                    <input type="hidden" value="<?php echo $product->name ?>" name="product_name">
-                    <input type="hidden" value="<?php echo $product->img ?>" name="product_image">
-                    <input type="hidden" value="<?php echo $product->price ?>" name="product_price">
-                    <input type="hidden" value="<?php echo $product->sale ?>" name="product_sale">
-
-
-
-
-                    <div class="mt-2  mb-2 ">
-                        <input id="addToCartBtn" class="addCart" type="submit" name="addcart" value="Thêm vào giỏ hàng">
-                    </div>
-                    </form>
-                    <div class="product-in4">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="product-feature">
-                                    <div class="icon">
-                                        <img src="https://routine.vn/static/version1702009271/frontend/Magenest/routine/vi_VN/images/ghn.png"
-                                            alt="Giao hàng nhanh">
+                        <div class="product-in4">
+                            <div class="row gx-4 gy-4 pt-4">
+                                <!-- 1 -->
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="feature-icon rounded-circle bg-light d-flex justify-content-center align-items-center flex-shrink-0">
+                                            <i class="bi bi-truck fs-4 text-dark"></i>
+                                        </div>
+                                        <div class="ms-3">
+                                            <p class="fw-semibold mb-1 small">Giao hàng nhanh</p>
+                                            <p class="small text-muted mb-0">Từ 2 – 5 ngày</p>
+                                        </div>
                                     </div>
-                                    <div class="text">
-                                        <strong>Giao hàng nhanh</strong>
-                                        <p>Từ 2 - 5 ngày</p>
+                                </div>
+
+                                <!-- 2 -->
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="feature-icon rounded-circle bg-light d-flex justify-content-center align-items-center flex-shrink-0">
+                                            <i class="bi bi-award fs-4 text-dark"></i>
+                                        </div>
+                                        <div class="ms-3">
+                                            <p class="fw-semibold mb-1 small">Miễn phí vận chuyển</p>
+                                            <p class="small text-muted mb-0">Đơn hàng từ 399 K</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 3 -->
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="feature-icon rounded-circle bg-light d-flex justify-content-center align-items-center flex-shrink-0">
+                                            <i class="bi bi-arrow-counterclockwise fs-4 text-dark"></i>
+                                        </div>
+                                        <div class="ms-3">
+                                            <p class="fw-semibold mb-1 small">Đổi trả linh hoạt</p>
+                                            <p class="small text-muted mb-0">Với sản phẩm không áp dụng khuyến mãi</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 4 -->
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="feature-icon rounded-circle bg-light d-flex justify-content-center align-items-center flex-shrink-0">
+                                            <i class="bi bi-credit-card fs-4 text-dark"></i>
+                                        </div>
+                                        <div class="ms-3">
+                                            <p class="fw-semibold mb-1 small">Thanh toán dễ dàng</p>
+                                            <p class="small text-muted mb-0">Nhiều hình thức</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 5 -->
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="feature-icon rounded-circle bg-light d-flex justify-content-center align-items-center flex-shrink-0">
+                                            <i class="bi bi-telephone fs-4 text-dark"></i>
+                                        </div>
+                                        <div class="ms-3">
+                                            <p class="fw-semibold mb-1 small">Hotline hỗ trợ</p>
+                                            <p class="small mb-0">039 9999 365</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="product-feature">
-                                    <div class="icon">
-                                        <img src="https://routine.vn/static/version1702009271/frontend/Magenest/routine/vi_VN/images/free.png"
-                                            alt="Freeship toàn quốc từ 399k">
-                                    </div>
-                                    <div class="text">
-                                        <strong>Miễn phí vận chuyển</strong>
-                                        <p>Đơn hàng từ 399K</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="product-feature">
-                                    <div class="icon">
-                                        <img src="https://routine.vn/static/version1702009271/frontend/Magenest/routine/vi_VN/images/order.png"
-                                            alt="Theo dõi đơn hàng dễ dàng">
-                                    </div>
-                                    <div class="text">
-                                        <strong>Theo dõi đơn hàng một cách dễ dàng</strong>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
 
-                        <!-- Repeat the above structure for the next set of features -->
+                        <div class="product-detail container my-4">
+                            <!-- Section title -->
+                            <h2 class="h5 mb-3">THÔNG TIN SẢN PHẨM</h2>
 
-                        <div class="row">
-                            <!-- Feature 4 -->
-                            <div class="col-md-4">
-                                <div class="product-feature">
-                                    <div class="icon">
-                                        <img src="https://routine.vn/static/version1702009271/frontend/Magenest/routine/vi_VN/images/returns.png"
-                                            alt="Đổi trả tận nơi">
-                                    </div>
-                                    <div class="text">
-                                        <strong>Đổi trả linh hoạt</strong>
-                                        <p>Với sản phẩm không áp dụng khuyến mãi</p>
-                                    </div>
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs mb-3" id="productTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="intro-tab" data-bs-toggle="tab"
+                                        data-bs-target="#intro" type="button" role="tab">Giới thiệu</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="detail-tab" data-bs-toggle="tab"
+                                        data-bs-target="#detail" type="button" role="tab">Chi tiết</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="care-tab" data-bs-toggle="tab" data-bs-target="#care"
+                                        type="button" role="tab">Bảo quản</button>
+                                </li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="intro" role="tabpanel"
+                                    aria-labelledby="intro-tab">
+                                    <p>Áo sơ mi cổ trụ, thiết kế phối bèo tiểu thư phù hợp cho các nàng công sở yêu
+                                        thích
+                                        kiểu nữ tính dịu dàng.</p>
+                                    <p>Tay áo dài, có xếp ly nhỏ tạo độ bồng nhẹ. Viền cổ tay nhỏ, đính khuy kim loại cố
+                                        định, mang đến sự thanh thoát, khá tinh tế.</p>
+                                    <p>Áo lựa chọn chất liệu lụa mềm mại, mặc nhẹ và thoải mái. Bạn hãy mix áo cùng quần
+                                        Tây, chân váy...để có ngay một Outfit thời thượng khi đi làm hay đi gặp mặt bạn
+                                        bè.
+                                    </p>
+                                    <hr>
+                                    <h6>Thông tin mẫu</h6>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><strong>Chiều cao:</strong> 167 cm</li>
+                                        <li><strong>Cân nặng:</strong> 50 kg</li>
+                                        <li><strong>Số đo ba vòng:</strong> 83-65-93 cm</li>
+                                    </ul>
+                                    <p class="small text-muted mt-2">Mẫu mặc size M. Lưu ý: Màu sắc thực tế có thể chênh
+                                        lệch do ánh sáng và màn hình.</p>
+                                </div>
+
+                                <div class="tab-pane fade" id="detail" role="tabpanel" aria-labelledby="detail-tab">
+                                    <p>Khi hoàn thành mua sắm tại Website, đơn hàng sẽ lập tức được đóng gói và chuẩn bị
+                                        tiến hành giao hàng.</p>
+                                    <p>Hàng đặt sẽ được chuyển giao cho bên thứ ba và xác nhận sẽ được giao chậm nhất là
+                                        5
+                                        ngày cho một đơn hàng.</p>
+                                </div>
+
+                                <div class="tab-pane fade" id="care" role="tabpanel" aria-labelledby="care-tab">
+                                    <p><strong>Chi tiết bảo quản sản phẩm:</strong></p>
+                                    <ul>
+                                        <li>Các sản phẩm cao cấp (Senora) và áo khoác chỉ giặt khô, tuyệt đối không giặt
+                                            ướt.</li>
+                                        <li>Vải dệt kim: phơi ngang tránh bai giãn.</li>
+                                        <li>Vải voan, lụa, chiffon nên giặt tay.</li>
+                                        <!-- … tiếp các mục … -->
+                                    </ul>
                                 </div>
                             </div>
-                            <!-- Feature 5 -->
-                            <div class="col-md-4">
-                                <div class="product-feature">
-                                    <div class="icon">
-                                        <img src="https://routine.vn/static/version1702009271/frontend/Magenest/routine/vi_VN/images/pay.png"
-                                            alt="Thanh toán dễ dàng">
-                                    </div>
-                                    <div class="text">
-                                        <strong>Thanh toán dễ dàng nhiều hình thức</strong>
-                                    </div>
+
+                            <!-- Rating form (only if guest) -->
+                            <?php if (isset($_SESSION["guest"])): ?>
+                            <form action="<?php
+                                                        switch ($product->typeid) {
+                                                            case 0:
+                                                                echo 'index.php?page=main&controller=menproducts&action=vote';
+                                                                break;
+                                                            case 1:
+                                                                echo 'index.php?page=main&controller=womenproducts&action=vote';
+                                                                break;
+                                                            case 2:
+                                                                echo 'index.php?page=main&controller=shoesproducts&action=vote';
+                                                                break;
+                                                        }
+                                                        ?>" method="POST" class="mt-4 border-top pt-4">
+                                <input type="hidden" name="product_id" value="<?= $id ?>">
+                                <input type="hidden" name="starRating" id="starRatingInput" value="">
+
+                                <label class="form-label">Đánh giá sản phẩm</label>
+                                <div id="starRating" class="mb-3">
+                                    <!-- 5 stars -->
+                                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <i class="bi bi-star fs-3 text-muted me-2" data-value="<?= $i ?>"
+                                        style="cursor: pointer;"></i>
+                                    <?php endfor; ?>
+                                    <span id="ratingText" class="ms-2 text-secondary">Chưa chọn</span>
                                 </div>
-                            </div>
-                            <!-- Feature 6 -->
-                            <div class="col-md-4">
-                                <div class="product-feature">
-                                    <div class="icon">
-                                        <img src="https://routine.vn/static/version1702009271/frontend/Magenest/routine/vi_VN/images/hotline.png"
-                                            alt="Hotline hỗ trợ Routine">
-                                    </div>
-                                    <div class="text">
-                                        <strong>Hotline hỗ trợ</strong>
-                                        <p style="font-weight: bold">039 9999 365</p>
-                                    </div>
-                                </div>
-                            </div>
+
+                                <button type="submit" id="submitRating" class="btn btn-dark" disabled>Gửi đánh
+                                    giá</button>
+                            </form>
+                            <?php endif; ?>
                         </div>
-                    </div>
-
-                    <div class=" product-detail">
-                        <div class="show-more">
-                            <!-- <img src="https://ivymoda.com/assets/images/image-down.png" alt=""> -->
-                            THÔNG TIN SẢN PHẨM
-                        </div>
-                        <?php if(isset($_SESSION["guest"])){
-                         if($product->typeid == 0) { ?>
-                        <form action="index.php?page=main&controller=menproducts&action=vote" method="POST">
-                            <?php } ?>
-                            <?php if($product->typeid == 1) { ?>
-                            <form action="index.php?page=main&controller=womenproducts&action=vote" method="POST">
-                                <?php } ?>
-                                <?php if($product->typeid == 2) { ?>
-                                <form action="index.php?page=main&controller=shoesproducts&action=vote" method="POST">
-                                    <?php } ?>
-                                    <div class="mb-3">
-                                        <input type="hidden" value="<?php echo $id ?>" name="product_id">
-
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="starRating" id="star1"
-                                                value="1">
-                                            <label class="form-check-label" for="star1">1 sao</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="starRating" id="star2"
-                                                value="2">
-                                            <label class="form-check-label" for="star2">2 sao</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="starRating" id="star3"
-                                                value="3">
-                                            <label class="form-check-label" for="star3">3 sao</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="starRating" id="star4"
-                                                value="4">
-                                            <label class="form-check-label" for="star4">4 sao</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="starRating" id="star5"
-                                                value="5">
-                                            <label class="form-check-label" for="star5">5 sao</label>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
-                                </form>
-                                <?php } ?>
-
-                                <div class="product-detail-container activeB">
-                                    <div class="product-tab-box">
-                                        <button class="product-tab-btn active">Giới thiệu</button>
-                                        <button class="product-tab-btn">Chi tiết</button>
-                                        <button class="product-tab-btn">Bảo quản</button>
-                                        <div class="line"></div>
-                                    </div>
-
-                                    <div class="product-content-box">
-                                        <div class="product-tab-content active">
-                                            <p>Áo sơ mi cổ trụ, thiết kế phối bèo tiểu thư phù hợp cho các nàng
-                                                công sở yêu
-                                                thích kiểu nữ tính dịu dàng. </p>
-                                            <br>
-                                            <p>Tay áo dài, có xếp ly nhỏ tạo độ bồng nhẹ. Viền cổ tay nhỏ, đính
-                                                khuy kim loại cố
-                                                định, mang đến sự thanh thoát, khá tinh tế.</p>
-                                            <br>
-                                            <p>Áo lựa chọn chất liệu lụa mềm mại, mặc nhẹ và thoải mái. Bạn hãy
-                                                mix áo cùng quần
-                                                Tây, chân váy...để có ngay một Outfit thời thượng khi đi làm hay
-                                                đi gặp mặt bạn
-                                                bè. </p>
-                                            <br>
-                                            <p style="font-weight: bold;">Thông tin mẫu</p>
-                                            <br>
-                                            <p><span style="font-weight: bold;">Chiều cao</span>: 167 cm</p>
-                                            <br>
-                                            <p><span style="font-weight: bold;">Cân nặng</span>: 50 kg</p>
-                                            <br>
-                                            <p><span style="font-weight: bold;">Số đo ba vòng</span>: 83-65-93
-                                                cm</p>
-                                            <br>
-                                            <p>Mẫu mặc size M Lưu ý: Màu sắc sản phẩm thực tế sẽ có sự chênh
-                                                lệch nhỏ so với ảnh
-                                                do điều kiện ánh sáng khi chụp và màu sắc hiển thị qua màn hình
-                                                máy tính/ điện
-                                                thoại.</p>
-                                        </div>
-
-                                        <div class="product-tab-content">
-                                            <p>Khi hoàn thành mua sắm tại Website, đơn hàng sẽ lập tức được đóng gói và
-                                                chuẩn bị
-                                                tiến hành giao hàng.</p>
-                                            <br>
-                                            <p>Hàng đặt sẽ được chuyển giao cho bên thứ ba và xác nhận sẽ được giao chậm
-                                                nhất là
-                                                5 ngày cho một đơn hàng.</p>
-                                            <br>
-                                        </div>
-
-                                        <div class="product-tab-content">
-                                            <p>Chi tiết bảo quản sản phẩm:</p>
-                                            <br>
-                                            <p style="font-weight: bold;">* Các sản phẩm thuộc dòng cao cấp
-                                                (Senora) và áo khoác
-                                                (dạ, tweed, lông, phao) chỉ giặt khô, tuyệt đối không giặt ướt.
-                                            </p>
-                                            <br>
-                                            <p>* Vải dệt kim: sau khi giặt sản phẩm phải được phơi ngang tránh
-                                                bai giãn.</p>
-                                            <br>
-                                            <p>* Vải voan, lụa, chiffon nên giặt bằng tay.</p>
-                                            <br>
-                                            <p>* Vải thô, tuytsi, kaki không có phối hay trang trí đá cườm thì
-                                                có thể giặt máy.
-                                            </p>
-                                            <br>
-                                            <p>* Vải thô, tuytsi, kaki có phối màu tương phản hay trang trí
-                                                voan, lụa, đá cườm
-                                                thì cần giặt tay.</p>
-                                            <br>
-                                            <p>* Đồ Jeans nên hạn chế giặt bằng máy giặt vì sẽ làm phai màu
-                                                jeans. Nếu giặt thì
-                                                nên lộn trái sản phẩm khi giặt, đóng khuy, kéo khóa, không nên
-                                                giặt chung cùng
-                                                đồ sáng màu, tránh dính màu vào các sản phẩm khác. </p>
-                                            <br>
-                                            <p>* Các sản phẩm cần được giặt ngay không ngâm tránh bị loang màu,
-                                                phân biệt màu và
-                                                loại vải để tránh trường hợp vải phai. Không nên giặt sản phẩm
-                                                với xà phòng có
-                                                chất tẩy mạnh, nên giặt cùng xà phòng pha loãng.</p>
-                                            <br>
-                                            <p>* Các sản phẩm có thể giặt bằng máy thì chỉ nên để chế độ giặt
-                                                nhẹ, vắt mức trung
-                                                bình và nên phân các loại sản phẩm cùng màu và cùng loại vải khi
-                                                giặt.</p>
-                                            <br>
-                                            <p>* Nên phơi sản phẩm tại chỗ thoáng mát, tránh ánh nắng trực tiếp
-                                                sẽ dễ bị phai
-                                                bạc màu, nên làm khô quần áo bằng cách phơi ở những điểm gió sẽ
-                                                giữ màu vải tốt
-                                                hơn.</p>
-                                            <br>
-                                            <p>* Những chất vải 100% cotton, không nên phơi sản phẩm bằng mắc áo
-                                                mà nên vắt
-                                                ngang sản phẩm lên dây phơi để tránh tình trạng rạn vải.</p>
-                                            <br>
-                                            <p>* Khi ủi sản phẩm bằng bàn là và sử dụng chế độ hơi nước sẽ làm
-                                                cho sản phẩm dễ
-                                                ủi phẳng, mát và không bị cháy, giữ màu sản phẩm được đẹp và bền
-                                                lâu hơn. Nhiệt
-                                                độ của bàn là tùy theo từng loại vải. </p>
-                                            <br>
-
-                                        </div>
-                                    </div>
-                                </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
     <?php
-            }
-            ?>
+    }
+        ?>
     <?php
-        }
+}
     ?>
 
 
@@ -402,50 +431,50 @@
     </div>
     <div class="row">
         <h2 class="text-center fw-bold">SẢN PHẨM TƯƠNG TỰ</h2>
-        <?php 
+        <?php
         $max = 0;
-        foreach($products as $product){
+        foreach ($products as $product) {
             $max += 1;
         }
         $arr = array();
-        for($s = 0; $s < 4; $s++){
+        for ($s = 0; $s < 4; $s++) {
             $temp = rand(1, $max);
-            while(in_array($temp, $arr)){
+            while (in_array($temp, $arr)) {
                 $temp = rand(1, $max);;
             }
-            array_push($arr,$temp);
+            array_push($arr, $temp);
         }
-        $count= 0;
+        $count = 0;
         foreach ($products as $product) {
             $count += 1;
-            foreach($arr as $i){
-            if ($id != $product->id && $i == $count){
-                echo '
+            foreach ($arr as $i) {
+                if ($id != $product->id && $i == $count) {
+                    echo '
                         <div class="col-12 col-lg-3 col-md-6 mb-3 mt-3">
                         <a href="index.php?page=main&controller=detail&id=' . $product->id . '&action=index"
                             class="card h-100 text-decoration-none">';
-                        if ($product->sale) 
-                          echo  '<div class="badge bg-dark text-light position-absolute" style="top: 0.5rem; right: 0.5rem">SALE '. $product->sale .'%</div>';
-                              echo'  <!-- Product image-->
-                    <img class="card-img-top" src="' . $product->img .'" alt="...">
+                    if ($product->sale)
+                        echo  '<div class="badge bg-dark text-light position-absolute" style="top: 0.5rem; right: 0.5rem">SALE ' . $product->sale . '%</div>';
+                    echo '  <!-- Product image-->
+                    <img class="card-img-top" src="' . $product->img . '" alt="...">
                     <!-- Product details-->
                     <div class="card-body p-4">
                         <div class="text-center">
                         <p class="product-name text-muted" style="font-size: 1em">' . $product->name .
                         '</p>
                     <span class="fw-bold">' . number_format($product->price * (100 -
-                        $product->sale) / 100, 0, ',', '.') . ' đ</span>
+                            $product->sale) / 100, 0, ',', '.') . ' đ</span>
                     <span class="text-muted text-decoration-line-through">' .
                         number_format($product->price, 0, ',', '.') . ' đ</span>';
 
                     if ($product->vote_number == 0) {
-                    echo '<p class="product-name text-muted" style="font-size: 1em">' .
-                        $product->vote_number . ' lượt đánh giá</p>';
+                        echo '<p class="product-name text-muted" style="font-size: 1em">' .
+                            $product->vote_number . ' lượt đánh giá</p>';
                     } else {
-                    echo '<p class="product-name text-muted" style="font-size: 1em">' .
-                        $product->vote_number . ' lượt đánh giá</p>
+                        echo '<p class="product-name text-muted" style="font-size: 1em">' .
+                            $product->vote_number . ' lượt đánh giá</p>
                     <p class="product-name text-muted" style="font-size: 1em">' .
-                        $product->total_stars / $product->vote_number . ' đánh giá trung bình
+                            $product->total_stars / $product->vote_number . ' đánh giá trung bình
                     </p>';
                     }
 
@@ -455,10 +484,10 @@
                     </div>
                 </a>
             </div>';
+                }
             }
-            }
-            }
-            ?>
+        }
+        ?>
     </div>
 
 
@@ -810,7 +839,45 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function() {
+    const stars = document.querySelectorAll('#starRating .bi');
+    const input = document.getElementById('starRatingInput');
+    const btn = document.getElementById('submitRating');
+    const txt = document.getElementById('ratingText');
+    let rating = 0;
 
+    // helper to repaint
+    function paint(r) {
+        stars.forEach(s => {
+            const v = +s.getAttribute('data-value');
+            if (v <= r) {
+                s.classList.replace('bi-star', 'bi-star-fill');
+                s.classList.replace('text-muted', 'text-warning');
+            } else {
+                s.classList.replace('bi-star-fill', 'bi-star');
+                s.classList.replace('text-warning', 'text-muted');
+            }
+        });
+        txt.textContent = r ? `${r} sao` : 'Chưa chọn';
+        btn.disabled = !r;
+        input.value = r;
+    }
+
+    stars.forEach(s => {
+        s.addEventListener('click', () => {
+            rating = +s.getAttribute('data-value');
+            paint(rating);
+        });
+        s.addEventListener('mouseover', () => paint(+s.getAttribute('data-value')));
+        s.addEventListener('mouseout', () => paint(rating));
+    });
+
+    // init
+    paint(0);
+})();
+</script>
 
 <script>
 // JavaScript để xử lý sự kiện click
@@ -872,20 +939,28 @@ if (button) {
 }
 </script>
 <script>
-$(document).ready(function() {
-    // Lắng nghe sự kiện khi carousel thay đổi
-    $('#carouselExampleControls').on('slid.bs.carousel', function() {
-        // Lấy index của carousel item hiện tại
-        var currentIndex = $('#carouselExampleControls .carousel-inner .carousel-item.active').index();
+document.addEventListener('DOMContentLoaded', () => {
+    const carouselEl = document.getElementById('productCarousel');
+    const carousel = new bootstrap.Carousel(carouselEl);
+    const thumbs = Array.from(document.querySelectorAll('.product-thumb'));
+    const items = Array.from(carouselEl.querySelectorAll('.carousel-item'));
 
-        // Loại bỏ đường viền từ tất cả các ảnh nhỏ
-        $('.product-content-left-small-img img').css('border', 'none');
+    // Clicking a thumb still moves the carousel
+    thumbs.forEach((thumb, idx) => {
+        thumb.addEventListener('click', () => {
+            carousel.to(idx);
+        });
+    });
 
-        // Thêm đường viền cho ảnh nhỏ tương ứng với carousel item hiện tại
-        $('.product-content-left-small-img img').eq(currentIndex).css('border', '2px solid #000');
+    // When carousel finishes sliding, update the active thumb
+    carouselEl.addEventListener('slid.bs.carousel', (e) => {
+        // e.relatedTarget is the new active .carousel-item
+        const newIndex = items.indexOf(e.relatedTarget);
+        thumbs.forEach(t => t.classList.remove('active'));
+        if (thumbs[newIndex]) thumbs[newIndex].classList.add('active');
     });
 });
 </script>
 <?php
-   include_once('views/main/footer.php');
-?>
+        include_once('views/main/footer.php');
+        ?>
